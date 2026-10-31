@@ -1,4 +1,4 @@
 interface:
-  display_name: "Pedido Claro"
+  display_name: "Clear Request"
   short_description: "Turn informal requests into clear, scoped work"
-  default_prompt: "Use $pedido-claro to understand my request, define appropriate validation, and carry out the work I asked for."
+  default_prompt: "Use $clear-request to understand my request, define appropriate validation, and carry out the work I asked for."

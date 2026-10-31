@@ -1,8 +1,8 @@
-# Pedido Claro
+# Clear Request
 
 **Make the request clear. Keep the intent. Get the work done.**
 
-Pedido Claro is an open Agent Skill that helps coding agents turn informal, incomplete, or messy development requests into focused action. It works with Claude Code, Codex, and other agents that support the [Agent Skills format](https://agentskills.io/).
+Clear Request is an open Agent Skill that helps coding agents turn informal, incomplete, or messy development requests into focused action. It works with Claude Code, Codex, and other agents that support the [Agent Skills format](https://agentskills.io/).
 
 You can write naturally, in any language. The skill itself is in English and asks the agent to reply in your language unless you choose otherwise.
 
@@ -11,13 +11,13 @@ You can write naturally, in any language. The skill itself is in English and ask
 With Node.js and npm installed, run:
 
 ```sh
-npx skills add matheusbgodoi/clear-request --skill pedido-claro --global
+npx skills add matheusbgodoi/clear-request --skill clear-request --global
 ```
 
 The [skills CLI](https://github.com/vercel-labs/skills) lets you select supported agents. To target Claude Code and Codex directly and skip interactive prompts:
 
 ```sh
-npx skills add matheusbgodoi/clear-request --skill pedido-claro --global --agent claude-code --agent codex --yes
+npx skills add matheusbgodoi/clear-request --skill clear-request --global --agent claude-code --agent codex --yes
 ```
 
 Reload your agent or start a new session if the skill is not discovered immediately. See the [CLI documentation](https://www.skills.sh/docs/cli) for other agents, updates, and removal.
@@ -28,10 +28,10 @@ Clone the repository into the appropriate global skills directory:
 
 ```sh
 # Codex
-git clone https://github.com/matheusbgodoi/clear-request.git ~/.agents/skills/pedido-claro
+git clone https://github.com/matheusbgodoi/clear-request.git ~/.agents/skills/clear-request
 
 # Claude Code
-git clone https://github.com/matheusbgodoi/clear-request.git ~/.claude/skills/pedido-claro
+git clone https://github.com/matheusbgodoi/clear-request.git ~/.claude/skills/clear-request
 ```
 
 If the destination already exists, update it using its existing installation method instead of overwriting local changes. Other agents can use the same folder in their documented skills location. See [compatibility](references/compatibility.md).
@@ -41,16 +41,16 @@ If the destination already exists, update it using its existing installation met
 In Codex:
 
 ```text
-$pedido-claro The save button sometimes creates two contacts. Fix it and test the failure case.
+$clear-request The save button sometimes creates two contacts. Fix it and test the failure case.
 ```
 
 In Claude Code:
 
 ```text
-/pedido-claro The save button sometimes creates two contacts. Fix it and test the failure case.
+/clear-request The save button sometimes creates two contacts. Fix it and test the failure case.
 ```
 
-You can also ask a compatible agent to use Pedido Claro by name. Automatic discovery depends on the agent and context.
+You can also ask a compatible agent to use Clear Request by name. Automatic discovery depends on the agent and context.
 
 ## What it does
 

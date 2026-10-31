@@ -4,4 +4,4 @@ This is an Agent Skills folder: `SKILL.md` has YAML frontmatter and Markdown ins
 
 The [skills CLI](https://github.com/vercel-labs/skills) supports global installation for multiple agents. See the [CLI documentation](https://www.skills.sh/docs/cli) for current agent names and options. Alternatively, copy this skill folder to an agent's documented skills directory. Restart or reload the agent if it does not discover a newly installed skill.
 
-In Codex, invoke `$pedido-claro`. In Claude Code, invoke `/pedido-claro`. Other environments may allow asking the agent to use the skill by name. Automatic selection depends on the host and context.
+In Codex, invoke `$clear-request`. In Claude Code, invoke `/clear-request`. Other environments may allow asking the agent to use the skill by name. Automatic selection depends on the host and context.

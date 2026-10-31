@@ -1,9 +1,9 @@
 ---
-name: pedido-claro
+name: clear-request
 description: Turn informal or ambiguous software requests into clear, scoped execution, plans, or transferable prompts while preserving the user's intent and permissions. Use when a user asks you to interpret, refine, or act on an unclear development request.
 ---
 
-# Pedido Claro
+# Clear Request
 
 Take responsibility for understanding the request. Users do not need polished prompts: interpret informal language, typos, examples, and available context without inventing requirements. Respond in the user's language unless asked otherwise.
 
