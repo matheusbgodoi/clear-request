@@ -1,4 +1,4 @@
 interface:
-  display_name: "Pedido claro"
-  short_description: "Interpreta seu pedido e prepara ou executa a tarefa"
-  default_prompt: "Use $pedido-claro para interpretar meu pedido informal, definir como validar e executar o trabalho solicitado."
+  display_name: "Pedido Claro"
+  short_description: "Turn informal requests into clear, scoped work"
+  default_prompt: "Use $pedido-claro to understand my request, define appropriate validation, and carry out the work I asked for."

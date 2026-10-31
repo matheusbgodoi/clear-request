@@ -1,52 +1,75 @@
-# Pedido claro
+# Pedido Claro
 
-Uma skill para agentes de programação que transforma pedidos informais em trabalho bem delimitado. Ela ajuda o agente a entender a intenção, investigar o contexto necessário, executar e validar — ou escrever um prompt transferível quando essa for a solicitação.
+**Make the request clear. Keep the intent. Get the work done.**
 
-## Quando usar
+Pedido Claro is an open Agent Skill that helps coding agents turn informal, incomplete, or messy development requests into focused action. It works with Claude Code, Codex, and other agents that support the [Agent Skills format](https://agentskills.io/).
 
-- **Implementar:** “o botão de salvar às vezes não funciona, dá uma olhada e corrige”. O agente investiga o comportamento, corrige e valida.
-- **Refinar um pedido:** “transforma isso num prompt para outro agente: quero um painel com os dados que já temos”. A skill entrega um prompt copiável sem executar a tarefa.
-- **Planejar:** “me ajuda a planejar a migração desse serviço”. O agente respeita o limite de planejamento.
-- **Lidar com ambiguidade:** “melhora essa tela, ela tá confusa”. O agente usa o contexto, evita inventar requisitos e pergunta apenas quando uma decisão relevante estiver realmente em aberto.
+You can write naturally, in any language. The skill itself is in English and asks the agent to reply in your language unless you choose otherwise.
 
-A skill preserva as permissões e instruções do ambiente. Ela não cria autorização para produção, ações destrutivas ou mensagens a terceiros.
+## Install globally
 
-## Instalação
-
-Clone este repositório no diretório de skills do seu agente. Por exemplo, para o Codex:
+With Node.js and npm installed, run:
 
 ```sh
-git clone https://github.com/matheusbgodoi/pedido-claro.git ~/.agents/skills/pedido-claro
+npx skills add matheusbgodoi/pedido-claro --skill pedido-claro --global
 ```
 
-Para o Claude Code:
+The [skills CLI](https://github.com/vercel-labs/skills) lets you select supported agents. To target Claude Code and Codex directly and skip interactive prompts:
 
 ```sh
+npx skills add matheusbgodoi/pedido-claro --skill pedido-claro --global --agent claude-code --agent codex --yes
+```
+
+Reload your agent or start a new session if the skill is not discovered immediately. See the [CLI documentation](https://www.skills.sh/docs/cli) for other agents, updates, and removal.
+
+### Manual installation
+
+Clone the repository into the appropriate global skills directory:
+
+```sh
+# Codex
+git clone https://github.com/matheusbgodoi/pedido-claro.git ~/.agents/skills/pedido-claro
+
+# Claude Code
 git clone https://github.com/matheusbgodoi/pedido-claro.git ~/.claude/skills/pedido-claro
 ```
 
-Depois, abra uma nova sessão ou recarregue as skills se necessário. No Codex, invoque com `$pedido-claro`; no Claude Code, com `/pedido-claro`. A descoberta automática depende do ambiente. Consulte [ambientes e portabilidade](references/ambientes.md) para outros agentes e detalhes de versão.
+If the destination already exists, update it using its existing installation method instead of overwriting local changes. Other agents can use the same folder in their documented skills location. See [compatibility](references/compatibility.md).
 
-## Exemplos
+## Use it
 
-```text
-$pedido-claro o cadastro tá quebrando quando o email já existe, arruma
-```
+In Codex:
 
 ```text
-$pedido-claro só cria um prompt para outro agente implementar busca na lista de clientes
+$pedido-claro The save button sometimes creates two contacts. Fix it and test the failure case.
 ```
+
+In Claude Code:
 
 ```text
-$pedido-claro só planeja como migrar esse serviço, sem alterar arquivos
+/pedido-claro The save button sometimes creates two contacts. Fix it and test the failure case.
 ```
 
-Mais exemplos e fundamentos estão em [references/exemplos.md](references/exemplos.md). As instruções completas estão em [SKILL.md](SKILL.md); `agents/openai.yaml` contém metadados opcionais para o Codex.
+You can also ask a compatible agent to use Pedido Claro by name. Automatic discovery depends on the agent and context.
 
-## Como funciona
+## What it does
 
-A skill identifica o resultado desejado e as restrições, consulta o contexto necessário, distingue fatos de hipóteses e define evidências de conclusão proporcionais ao risco. Para pedidos de ação, orienta o agente a executar e validar; para pedidos de prompt ou planejamento, respeita esse limite. O resultado depende das capacidades e permissões do agente utilizado.
+| Your request | Expected behavior |
+| --- | --- |
+| “Fix this error; I think it is the database.” | Investigate the error, treat the proposed cause as a hypothesis, fix and validate the actual issue. |
+| “Write a prompt for another agent to add search.” | Produce a self-contained prompt without implementing the feature. |
+| “Plan the migration; do not change files.” | Inspect relevant context and provide a plan without implementing it. |
+| “Delete customers we no longer need.” | Ask for the missing selection criteria before an irreversible action. |
 
-## Contribuindo
+The skill makes reasonable reversible decisions, asks when ambiguity materially matters, and preserves existing permissions. It does not grant access, authorize deployment, or guarantee an agent's behavior.
 
-Issues e pull requests são bem-vindos. Ao propor mudanças, inclua um exemplo concreto do comportamento desejado e preserve a portabilidade entre agentes.
+## How it is organized
+
+- [SKILL.md](SKILL.md): the instructions agents load.
+- [Examples](references/examples.md): realistic requests and mode boundaries.
+- [Compatibility](references/compatibility.md): portable usage guidance.
+- `agents/openai.yaml`: optional Codex interface metadata.
+
+## Contributing
+
+Issues and pull requests are welcome. Include a concrete request and expected behavior when suggesting changes, and keep the skill portable across agents.

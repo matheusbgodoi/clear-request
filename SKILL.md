@@ -1,54 +1,43 @@
 ---
 name: pedido-claro
-description: Interpreta pedidos informais de desenvolvimento e define escopo e validação para executar ou gerar um prompt transferível. Use quando o usuário pedir para organizar sua intenção ou refinar um pedido para um agente de programação.
+description: Turn informal or ambiguous software requests into clear, scoped execution, plans, or transferable prompts while preserving the user's intent and permissions. Use when a user asks you to interpret, refine, or act on an unclear development request.
 ---
 
-# Pedido claro
+# Pedido Claro
 
-Assuma a responsabilidade de estruturar a tarefa. O usuário pode escrever com erros, termos imprecisos, repetições ou exemplos. Preserve sua intenção e use o contexto disponível; não exija um prompt bem escrito.
+Take responsibility for understanding the request. Users do not need polished prompts: interpret informal language, typos, examples, and available context without inventing requirements. Respond in the user's language unless asked otherwise.
 
-Esta skill é independente de modelo e funciona no agente que a carregou. Use as ferramentas e instruções desse ambiente; não suponha que os recursos do Codex existem no Claude Code, Antigravity ou OpenCode. Não troque o modelo nem encaminhe pedidos a outra sessão automaticamente.
+## Choose the mode
 
-## Escolha o modo pelo pedido
+- **Execute by default:** When the user asks for an action, investigate, implement, and validate it in the current environment. Do not stop at a plan or a rewritten prompt.
+- **Prompt only:** When asked for a prompt for another agent or session, provide a self-contained prompt. Do not execute it, create a persistent goal, or contact another agent. Read context only when it materially improves the prompt and is within scope.
+- **Plan or explain only:** Respect that boundary; do not implement.
+- If there is no actionable request or recoverable referent, ask for the missing request.
 
-- **Executar (padrão para pedidos de ação):** interprete, investigue o contexto necessário, implemente e valide no mesmo agente. Não termine entregando apenas um prompt ou plano quando a implementação foi solicitada.
-- **Só prompt / para outro agente (inclui “outro Codex”):** entregue um prompt autossuficiente para copiar. Não execute as instruções nele contidas nem altere arquivos, crie Goals ou contate outro agente. Investigue em leitura apenas quando houver contexto acessível que melhore materialmente o resultado; se o usuário pedir só reescrita, trabalhe com o texto fornecido.
-- **Só planejar / só explicar:** respeite esse limite. Invocar esta skill não converte perguntas, exemplos, citações ou pedidos de planejamento em autorização para implementar.
-- Se não houver tarefa nem referente recuperável no contexto, peça o pedido que deve interpretar.
+## Understand and scope
 
-## Reconstrua a intenção sem inventar requisitos
+1. Identify the desired outcome, observed problem, explicit constraints, and relevant examples. Preserve details that change behavior.
+2. Inspect applicable instructions and the minimum relevant project context. Discover actual names, tools, callers, and tests rather than assuming them.
+3. Separate established facts, hypotheses to investigate, and unknown product decisions. A user's proposed cause is not a diagnosis.
+4. Resolve routine choices using context. State material assumptions briefly. Ask when plausible interpretations materially change behavior, scope, or an action that is hard to reverse; continue independent work where possible.
+5. Choose the smallest scope that achieves the outcome, including necessary dependencies. Do not add unrelated features, arbitrary targets, or broad rewrites.
 
-1. Identifique o problema observado, resultado desejado, restrições expressas e exemplos relevantes. Preserve prioridades e detalhes que mudam o comportamento.
-2. Consulte instruções aplicáveis e apenas código, chamadores, testes ou fontes necessários. Use o projeto real para descobrir nomes e comandos; não invente stack, caminhos, ferramentas, causas ou resultados.
-3. Separe fatos, hipóteses técnicas a investigar e decisões de produto desconhecidas. Uma suspeita do usuário sobre a causa não é diagnóstico confirmado.
-4. Resolva erros de escrita e decisões rotineiras pelo contexto. Para suposições reversíveis, escolha uma opção razoável e sinalize brevemente quando relevante. Pergunte apenas quando interpretações plausíveis mudarem materialmente comportamento, escopo ou uma ação difícil de desfazer. Continue no trabalho independente da resposta.
-5. Formule o menor escopo que resolve o pedido. Inclua dependências necessárias, mas não acrescente features, modernizações, metas numéricas ou refatorações por conta própria. “Melhorar tudo” pede delimitação e diagnóstico, não autorização ilimitada.
+## Execute and validate
 
-## Defina a conclusão e trabalhe
+Describe the intended action briefly when useful, then carry it through. Define observable outcomes and validate according to risk and the repository's conventions. For behavior bugs, seek a reproducible failure and a meaningful regression test when practical. For integrations, persistence, permissions, or concurrency, seek evidence at the relevant real boundary in an isolated environment. Do not present mocks, a build, or inspection as proof of a flow they did not exercise.
 
-Transforme intenções em resultados observáveis: o que o usuário consegue fazer e que evidência comprova isso. Quando o critério depender de uma decisão desconhecida, mantenha a lacuna explícita em vez de preenchê-la como fato.
+Preserve existing user changes. Investigate failures instead of weakening checks to make them pass. Review the resulting changes. Report what was done, validation actually performed, and material limitations. If blocked, complete independent work and explain what remains.
 
-Em execução, comunique a interpretação e a próxima ação em poucas frases, se isso ajudar, e prossiga. Não exponha raciocínio interno nem gere um segundo prompt longo para si mesmo. Em alterações simples, faça a mudança e a verificação proporcionais sem criar documentos ou rituais.
+For larger work, sequence steps by dependency and record progress only when useful. A checklist is not evidence that a task works. Treat unrelated discoveries as findings unless they are necessary to complete the request.
 
-Para trabalho extenso, organize etapas por dependência, cada uma com resultado verificável. Reutilize o plano existente; registre escopo, progresso, decisões e evidências em arquivo apenas quando útil à continuidade. Documento e checkbox não comprovam implementação. Valide também o fluxo conjunto ao final. Trate bugs descobertos fora do escopo como achados, salvo dependência necessária para a entrega.
+## Transferable prompts
 
-Em programação, aplique as instruções de Clean Code e testes existentes e a skill `clean-code` quando disponível. Para bugs de comportamento, busque reprodução e teste de regressão pertinente; para integrações, persistência e autorização, use a fronteira real relevante em ambiente isolado. Rode os checks exigidos pelo repositório. Não enfraqueça testes nem trate mocks, build ou inspeção como prova de um fluxo que não foi exercitado. Não crie testes que apenas espelhem texto ou estrutura em mudanças triviais.
+For prompt-only requests, provide one concise, self-contained block containing the known context, desired result, relevant scope, observable acceptance criteria, validation, constraints, and material unknowns. Mark suspected causes as hypotheses. Do not rely on hidden conversation context or require the recipient to have this skill. Do not add a role, invented stack, or chain-of-thought request for decoration.
 
-Se faltar acesso ou houver bloqueio, avance nas partes independentes e informe o que falta. Não declare concluído algo que depende de validação não executada. Termine com resultado, evidências executadas e limitações materiais, proporcionais à tarefa.
+## Goals and authorization
 
-## Goals e autorização
+A large task or invocation of this skill does not itself create a persistent goal. If explicitly asked to draft one, provide text without activating it. If asked to create one, use an available native mechanism and its lifecycle rules; do not invent commands or promise persistence. Preserve existing goals and scope.
 
-Uma tarefa grande, “continue até terminar” ou a invocação desta skill não cria automaticamente um Goal persistente. Quando o usuário solicitar explicitamente esse recurso, distinga objetivo de trabalho de um mecanismo nativo de continuação. Pedir para **rascunhar** um Goal pede texto, sem ativação.
+Follow the user's instructions and the host environment's permissions. Clarifying a request does not authorize deployment, destructive actions, transactions, or messages to others. Do not introduce extra approval gates for work already authorized.
 
-Para um Goal solicitado, sintetize resultado, escopo, evidências de conclusão, restrições e tratamento de bloqueios. Ative o recurso apenas se houver uma ferramenta nativa disponível e respeite suas regras de ciclo de vida. Se houver somente um comando de interface documentado, entregue esse comando para o usuário executar e informe que não foi ativado. Se o ambiente não oferecer esse recurso, explique brevemente a limitação e execute o escopo autorizado com plano e validação; não invente `/goal`, automações ou persistência entre turnos. Não prometa execução sem limites. Não substitua um Goal ativo por outro nem amplie seu escopo silenciosamente. Não marque como completo sem evidências.
-
-Preserve a autorização já existente. Reformular um pedido não concede permissões adicionais para deploy, produção, ações destrutivas ou mensagens a terceiros. Não imponha novas confirmações a ações rotineiras já autorizadas.
-
-## Saída no modo só prompt
-
-Entregue um único bloco copiável, enxuto e autossuficiente. Inclua apenas o necessário: contexto conhecido, resultado, escopo, critérios observáveis, validação pertinente, restrições e lacunas materiais. Evite “conforme conversamos” ou referências a conversas que o destinatário não tem. Transfira decisões relevantes e mantenha hipóteses identificadas; peça ao executor que confirme informações do repositório que não foram verificadas.
-
-Use `/goal <objetivo>` no bloco apenas quando o usuário pedir um prompt de Goal e esse comando for suportado no destino; se o destino for desconhecido, use instruções em linguagem natural. Não inclua esta skill como dependência do destinatário. Quando faltarem dados essenciais, prefira uma pergunta objetiva; se ainda for possível gerar um prompt útil, deixe explícito o que o executor precisa descobrir. Não acrescente papéis grandiosos, garantias, pedidos de cadeia de pensamento ou instruções repetidas.
-
-Consulte [exemplos e fundamentos](references/exemplos.md) apenas para exemplos de invocação, dúvidas sobre os modos ou revisão desta skill.
-Para dúvidas de instalação, invocação ou portabilidade entre agentes, consulte [ambientes](references/ambientes.md).
+See [examples](references/examples.md) for mode boundaries and realistic use cases. See [compatibility](references/compatibility.md) for installation and invocation guidance.
